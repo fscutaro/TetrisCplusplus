@@ -1,0 +1,4 @@
+﻿  ZTetromino.cpp
+  LINK : no se encontró C:\Users\Fran\Desktop\Tetris\Tetris\Debug\Tetris.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+MSVCRTD.lib(cinitexe.obj) : warning LNK4098: la biblioteca predeterminada'msvcrt.lib' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
+  Tetris.vcxproj -> C:\Users\Fran\Desktop\Tetris\Tetris\Debug\Tetris.exe

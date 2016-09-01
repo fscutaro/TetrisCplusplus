@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9794EF69-D440-4DF9-85E0-1BB175E10879}</ProjectGuid>
+    <RootNamespace>Tetris</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Fran\Desktop\Tetris\SDL2_image-2.0.1\include;C:\Users\Fran\Desktop\Tetris\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>C:\Users\Fran\Desktop\Tetris\SDL2_image-2.0.1\lib\x86;C:\Users\Fran\Desktop\Tetris\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Events\EventDispatcher.cpp" />
+    <ClCompile Include="Core\Events\EventObserver.cpp" />
+    <ClCompile Include="Core\Input\Keyboard\KeyboardKey.cpp" />
+    <ClCompile Include="Core\Input\Keyboard\SDL\SDLKeyboardController.cpp" />
+    <ClCompile Include="Core\Processing\GameLoop\SDLGameLoop\SDLGameLoop.cpp" />
+    <ClCompile Include="Core\SDL\SDLEventManager.cpp" />
+    <ClCompile Include="Core\Time\GameTimer.cpp" />
+    <ClCompile Include="Src\Tetromino\ITetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\JTetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\LTetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\OTetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\STetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\Tetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\TTetromino.cpp" />
+    <ClCompile Include="Src\Tetromino\ZTetromino.cpp" />
+    <ClCompile Include="Src\Utils\Board.cpp" />
+    <ClCompile Include="Core\Display\Rendering\SDL\SDLSpriteRenderer.cpp" />
+    <ClCompile Include="Core\Game.cpp" />
+    <ClCompile Include="Core\Rendering\SDL\SDLRenderer.cpp" />
+    <ClCompile Include="Core\Rendering\DrawingManager.cpp" />
+    <ClCompile Include="Src\States\GameplayState.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Core\Display\Sprite.cpp" />
+    <ClCompile Include="Core\Processing\UpdateManager.cpp" />
+    <ClCompile Include="Core\FSM\StateMachine.cpp" />
+    <ClCompile Include="Core\FSM\State.cpp" />
+    <ClCompile Include="Tetris.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Events\EventDispatcher.h" />
+    <ClInclude Include="Core\Events\EventObserver.h" />
+    <ClInclude Include="Core\Events\IEventDispatcher.h" />
+    <ClInclude Include="Core\Input\IInputController.h" />
+    <ClInclude Include="Core\Input\InputController.h" />
+    <ClInclude Include="Core\Input\Keyboard\KeyboardInputController.h" />
+    <ClInclude Include="Core\Input\Keyboard\KeyboardKey.h" />
+    <ClInclude Include="Core\Input\Keyboard\SDL\SDLKeyboardController.h" />
+    <ClInclude Include="Core\Processing\GameLoop\GameLoop.h" />
+    <ClInclude Include="Core\Processing\GameLoop\SDLGameLoop\SDLGameLoop.h" />
+    <ClInclude Include="Core\SDL\SDLEventManager.h" />
+    <ClInclude Include="Core\Time\GameTimer.h" />
+    <ClInclude Include="Src\Tetromino\ITetromino.h" />
+    <ClInclude Include="Src\Tetromino\JTetromino.h" />
+    <ClInclude Include="Src\Tetromino\LTetromino.h" />
+    <ClInclude Include="Src\Tetromino\OTetromino.h" />
+    <ClInclude Include="Src\Tetromino\STetromino.h" />
+    <ClInclude Include="Src\Tetromino\Tetromino.h" />
+    <ClInclude Include="Src\Tetromino\TTetromino.h" />
+    <ClInclude Include="Src\Tetromino\ZTetromino.h" />
+    <ClInclude Include="Src\Utils\Board.h" />
+    <ClInclude Include="Core\Constants.h" />
+    <ClInclude Include="Core\Display\Rendering\ISpriteRenderer.h" />
+    <ClInclude Include="Core\Display\Rendering\SDL\SDLSpriteRenderer.h" />
+    <ClInclude Include="Core\Display\Rendering\SpriteRenderer.h" />
+    <ClInclude Include="Core\FSM\IState.h" />
+    <ClInclude Include="Core\Game.h" />
+    <ClInclude Include="Core\Processing\IUpdateable.h" />
+    <ClInclude Include="Core\Rendering\Renderer.h" />
+    <ClInclude Include="Core\Rendering\SDL\SDLRenderer.h" />
+    <ClInclude Include="Core\Rendering\IRenderer.h" />
+    <ClInclude Include="Core\Display\Sprite.h" />
+    <ClInclude Include="Core\Rendering\DrawingManager.h" />
+    <ClInclude Include="Core\Processing\UpdateManager.h" />
+    <ClInclude Include="Core\FSM\StateMachine.h" />
+    <ClInclude Include="Core\FSM\State.h" />
+    <ClInclude Include="Src\States\GameplayState.h" />
+    <ClInclude Include="Tetris.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
