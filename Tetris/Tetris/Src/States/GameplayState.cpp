@@ -15,7 +15,8 @@
 const float GameplayState::DESIGN_X_GAP     = 11.5f;
 const float GameplayState::DESIGN_Y_GAP     = 10;
 const int   GameplayState::DESIGN_TILE_SIZE = 29;
-const float GameplayState::INPUT_COOLDOWN   = 1;
+const float GameplayState::NORMAL_UPDATE_DELAY_TIME   = 5;
+const float GameplayState::SPEED_UP_UPDATE_DELAY_TIME = .3f;
 
 GameplayState::GameplayState(void):State("Gameplay")
 {
@@ -27,13 +28,9 @@ void GameplayState::Start()
 	_board = new Board(this);
 
 	_updateDelayCount	= 0;
-	_updateDelay		= 5;
+	_updateDelay		= NORMAL_UPDATE_DELAY_TIME;
 	_currentTetromino	= getRandomTetromino();
 	_nextTetromino		= getRandomTetromino();
-
-	_currentPressedKey = "";
-	_lastPressedKey    = "";
-	_inputCooldownCount = 0;
 
 	_currentTetromino->Draw();
 	_currentTetromino->SetPos( DESIGN_X_GAP, DESIGN_Y_GAP );
@@ -41,18 +38,32 @@ void GameplayState::Start()
 	_nextTetromino->Draw();
 	_nextTetromino->SetPos( DESIGN_X_GAP, DESIGN_Y_GAP );
 
-	addEventListener( KeyboardKey::LEFT_ARROW );
-	addEventListener( KeyboardKey::RIGHT_ARROW );
-	addEventListener( KeyboardKey::UP_ARROW );
-	addEventListener( KeyboardKey::DOWN_ARROW );
+	addEventListener( KEY_DOWN::KeyboardKey::LEFT_ARROW );
+	addEventListener( KEY_UP::KeyboardKey::LEFT_ARROW );
+
+	addEventListener( KEY_DOWN::KeyboardKey::RIGHT_ARROW );
+	addEventListener( KEY_UP::KeyboardKey::RIGHT_ARROW );
+
+	addEventListener( KEY_DOWN::KeyboardKey::UP_ARROW );
+	addEventListener( KEY_UP::KeyboardKey::UP_ARROW );
+
+	addEventListener( KEY_DOWN::KeyboardKey::DOWN_ARROW );
+	addEventListener( KEY_UP::KeyboardKey::DOWN_ARROW );
 }
 
 void GameplayState::Sleep()
 {
-	removeEventListener( KeyboardKey::LEFT_ARROW );
-	removeEventListener( KeyboardKey::RIGHT_ARROW );
-	removeEventListener( KeyboardKey::UP_ARROW );
-	removeEventListener( KeyboardKey::DOWN_ARROW );
+	removeEventListener( KEY_DOWN::KeyboardKey::LEFT_ARROW );
+	removeEventListener( KEY_UP::KeyboardKey::LEFT_ARROW );
+
+	removeEventListener( KEY_DOWN::KeyboardKey::RIGHT_ARROW );
+	removeEventListener( KEY_UP::KeyboardKey::RIGHT_ARROW );
+
+	removeEventListener( KEY_DOWN::KeyboardKey::UP_ARROW );
+	removeEventListener( KEY_UP::KeyboardKey::UP_ARROW );
+
+	removeEventListener( KEY_DOWN::KeyboardKey::DOWN_ARROW );
+	removeEventListener( KEY_UP::KeyboardKey::DOWN_ARROW );
 
 	SAFE_DELETE_OBJECT( _board );
 	_board = nullptr;
@@ -60,8 +71,6 @@ void GameplayState::Sleep()
 
 void GameplayState::Update(float dt)
 {
-	_inputCooldownCount += dt;	
-
 	_updateDelayCount += dt;
 	if( _updateDelayCount >= _updateDelay )
 	{
@@ -105,6 +114,8 @@ Tetromino* GameplayState::getRandomTetromino()
 
 	int randomN = rand() % 7;
 
+	return new ITetromino( this );
+
 	switch( randomN )
 	{
 		case 0:
@@ -128,65 +139,77 @@ void GameplayState::OnEventHandled( const char* eventName )
 {
 	//std::cout<<"event= "<<eventName<<std::endl;
 	if(
-		strcmp( eventName, KeyboardKey::LEFT_ARROW  ) == 0 ||
-		strcmp( eventName, KeyboardKey::RIGHT_ARROW ) == 0 ||
-		strcmp( eventName, KeyboardKey::UP_ARROW    ) == 0 ||
-		strcmp( eventName, KeyboardKey::DOWN_ARROW  ) == 0
+		strcmp( eventName, KEY_DOWN::KeyboardKey::LEFT_ARROW  ) == 0 ||
+		strcmp( eventName, KEY_UP::KeyboardKey::LEFT_ARROW ) == 0 ||
+		strcmp( eventName, KEY_DOWN::KeyboardKey::RIGHT_ARROW    ) == 0 ||
+		strcmp( eventName, KEY_UP::KeyboardKey::RIGHT_ARROW  ) == 0 ||
+		strcmp( eventName, KEY_DOWN::KeyboardKey::UP_ARROW  ) == 0 ||
+		strcmp( eventName, KEY_UP::KeyboardKey::UP_ARROW  ) == 0 ||
+		strcmp( eventName, KEY_DOWN::KeyboardKey::DOWN_ARROW  ) == 0 ||
+		strcmp( eventName, KEY_UP::KeyboardKey::DOWN_ARROW  ) == 0
 	  )
 	{
-		if( strcmp( _lastPressedKey, _currentPressedKey ) == 0 )
-		{
-			if( _inputCooldownCount >= INPUT_COOLDOWN )
-			{
-				_OnInputHandled( eventName );
-			}
-		}
-		else
-		{
-			_OnInputHandled( eventName );
-		}
+		_OnInputHandled( eventName );
 	}
 }
 
 void GameplayState::_OnInputHandled( const char* eventName )
 {
 	
-	_lastPressedKey = _currentPressedKey;
-
-	if( strcmp( eventName, KeyboardKey::LEFT_ARROW  ) == 0 )
+	if( strcmp( eventName, KEY_DOWN::KeyboardKey::LEFT_ARROW  ) == 0 && !_leftArrowPressed )
 	{
-		_currentPressedKey = "left";
 		if ( _board->canMove( _currentTetromino, -1 ) )
 		{
 			_currentTetromino->tileX--;
 			_updateCurrentTetrominoPosition();
 		}
+		_leftArrowPressed = true;
 	}
-	
-	if( strcmp( eventName, KeyboardKey::RIGHT_ARROW  ) == 0 )
+
+	if( strcmp( eventName, KEY_UP::KeyboardKey::LEFT_ARROW  ) == 0 )
 	{
-		_currentPressedKey = "right";
+		_leftArrowPressed = false;
+	}
+
+	if( strcmp( eventName, KEY_DOWN::KeyboardKey::RIGHT_ARROW  ) == 0 && !_rightArrowPressed )
+	{
 		if( _board->canMove( _currentTetromino, 1 ) )
 		{
 			_currentTetromino->tileX++;
 			_updateCurrentTetrominoPosition();
 		}
+		_rightArrowPressed = true;
 	}
 
-	if( strcmp( eventName, KeyboardKey::UP_ARROW  ) == 0 )
+	if( strcmp( eventName, KEY_UP::KeyboardKey::RIGHT_ARROW  ) == 0 )
 	{
-		_currentPressedKey = "up";
+		_rightArrowPressed = false;
+	}
+
+	if( strcmp( eventName, KEY_DOWN::KeyboardKey::UP_ARROW  ) == 0 && !_upArrowPressed )
+	{
 		if( _board->canRotate( _currentTetromino ) )
 		{
 			_currentTetromino->Rotate();
+			
 		}
+		_upArrowPressed = true;
 	}
 
-	if( strcmp( eventName, KeyboardKey::DOWN_ARROW  ) == 0 )
+	if( strcmp( eventName, KEY_UP::KeyboardKey::UP_ARROW  ) == 0 )
 	{
-		_currentPressedKey = "down";
+		_upArrowPressed = false;
 	}
 
-	_inputCooldownCount = 0;
+	if( strcmp( eventName, KEY_DOWN::KeyboardKey::DOWN_ARROW  ) == 0 )
+	{
+		_updateDelay = SPEED_UP_UPDATE_DELAY_TIME;
+	}
+
+	if( strcmp( eventName, KEY_UP::KeyboardKey::DOWN_ARROW  ) == 0 )
+	{
+		_updateDelay = NORMAL_UPDATE_DELAY_TIME;
+	}
+	
 	//std::cout<<"OnInputHandled()= "<<eventName<<std::endl;
 }

@@ -37,10 +37,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Fran\Desktop\Tetris\SDL2_image-2.0.1\include;C:\Users\Fran\Desktop\Tetris\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\SDL2_image-2.0.1\include;..\..\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\Fran\Desktop\Tetris\SDL2_image-2.0.1\lib\x86;C:\Users\Fran\Desktop\Tetris\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\SDL2_image-2.0.1\lib\x86;..\..\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

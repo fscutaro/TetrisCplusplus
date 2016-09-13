@@ -4,7 +4,7 @@
 
 TTetromino::TTetromino(IState* stateInstance):Tetromino(stateInstance)
 {
-	_maxRotations = 3;
+	_maxRotations = 4;
 
 	_grid = new vector<vector<vector<int>*>*>();
 

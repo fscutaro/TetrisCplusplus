@@ -1,7 +1,7 @@
 #include "SDLKeyboardController.h"
 #include "../../../SDL/SDLEventManager.h"
 #include "../KeyboardKey.h"
-
+#include <iostream>
 
 KeyboardController::KeyboardController(void)
 {
@@ -15,21 +15,24 @@ void KeyboardController::Update()
 {
 	SDL_Event* currentEvent = SDLEventManager::getInstance()->getCurrentEvent();
 
-	if( currentEvent->type == SDL_KEYDOWN )
+	bool keyStateChanged = currentEvent->type == SDL_KEYDOWN || currentEvent->type == SDL_KEYUP;
+
+	//TODO:: OPTIMIZE THIS. SDL_KEYUP IS ALWAYS FIRED
+	if( keyStateChanged )
 	{
 		switch( currentEvent->key.keysym.sym )
 		{
 			case SDLK_UP:
-				dispatchEvent( KeyboardKey::UP_ARROW );
+				dispatchEvent( ( currentEvent->type == SDL_KEYDOWN ) ? KEY_DOWN::KeyboardKey::UP_ARROW : KEY_UP::KeyboardKey::UP_ARROW );
 				break;
 			case SDLK_DOWN:
-				dispatchEvent( KeyboardKey::DOWN_ARROW );
+				dispatchEvent( ( currentEvent->type == SDL_KEYDOWN ) ? KEY_DOWN::KeyboardKey::DOWN_ARROW : KEY_UP::KeyboardKey::DOWN_ARROW );
 				break;
 			case SDLK_LEFT:
-				dispatchEvent( KeyboardKey::LEFT_ARROW );
+				dispatchEvent( ( currentEvent->type == SDL_KEYDOWN ) ? KEY_DOWN::KeyboardKey::LEFT_ARROW : KEY_UP::KeyboardKey::LEFT_ARROW );
 				break;
 			case SDLK_RIGHT:
-				dispatchEvent( KeyboardKey::RIGHT_ARROW );
+				dispatchEvent( ( currentEvent->type == SDL_KEYDOWN ) ? KEY_DOWN::KeyboardKey::RIGHT_ARROW : KEY_UP::KeyboardKey::RIGHT_ARROW );
 				break;
 		}
 	}

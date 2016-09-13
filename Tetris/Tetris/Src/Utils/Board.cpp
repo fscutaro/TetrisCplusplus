@@ -72,10 +72,10 @@ Board::~Board(void)
 	SAFE_DELETE_OBJECT( _grid );
 }
 
+
 bool Board::tetrominoIsGrounded(Tetromino* t)
 {
 	std::vector< std::vector<int>* >* grid = t->GetGrid();
-
 	std::vector<int>* currentFloor;
 	int currentFlorSize = 0;
 
@@ -117,7 +117,7 @@ bool Board::tetrominoIsGrounded(Tetromino* t)
 
 bool Board::canRotate( Tetromino* t )
 {
-	return _fitsInGrid(t, t->GetNextRotation(), 0 );
+	return _fitsInGrid( t, t->GetNextRotation(), 0 ) ;
 }
 
 bool Board::canMove( Tetromino* t, int direction )
@@ -133,7 +133,9 @@ bool Board::_fitsInGrid( Tetromino* t, std::vector< std::vector<int>* >* grid, i
 	int floorY	   = 0;
 	int floorX	   = 0;
 	int tileXRight = 0;
+	int tileYDown  = 0;
 
+	//We look for the bounds of our tetromino for collision checking
 	for	( int i = 0; i < numRows; i++ )
 	{
 		for( int j = 0; j < numColumns; j++ )
@@ -144,9 +146,27 @@ bool Board::_fitsInGrid( Tetromino* t, std::vector< std::vector<int>* >* grid, i
 				{
 					tileXRight = j;
 				}
-				//std::cout<<"tileXRight = "<<tileXRight<<"\n";
+
+				if( tileYDown < i )
+				{
+					tileYDown = i;
+				}
 			}
 		}
+	}
+
+	//We check if the tetromino is exceding its boundaries in the Y axis ( while doing a rotation, for example )
+	if( ( tileYDown + t->tileY ) >= ROWS )
+	{
+		std::cout<<"( tileYDown + t->tileY ) >= ROWS \n";
+		return false;
+	}
+	
+	//We check if the tetromino is exceding its boundaries in the X axis ( while doing a rotation, for example )
+	if( ( tileXRight + t->tileX ) >= COLUMNS )
+	{
+		std::cout<<"( tileXRight + t->tileX ) >= COLUMNS \n";
+		return false;
 	}
 
 	//check collision with left wall
@@ -181,7 +201,6 @@ bool Board::_fitsInGrid( Tetromino* t, std::vector< std::vector<int>* >* grid, i
 			}
 		}
 	}
-
 	return true;
 }
 

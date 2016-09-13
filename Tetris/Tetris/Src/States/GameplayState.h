@@ -22,12 +22,13 @@ private:
 	float _updateDelay;
 	static const float DESIGN_X_GAP;
 	static const float DESIGN_Y_GAP;
-	static const float INPUT_COOLDOWN;
+	static const float NORMAL_UPDATE_DELAY_TIME;
+	static const float SPEED_UP_UPDATE_DELAY_TIME;
 	static const int DESIGN_TILE_SIZE;
-	char* _currentPressedKey;
-	char* _lastPressedKey;
-	float _inputCooldownCount;
 	void _OnInputHandled( const char* eventName );
 	void _updateCurrentTetrominoPosition();
+	bool _upArrowPressed;
+	bool _leftArrowPressed;
+	bool _rightArrowPressed;
 };
 

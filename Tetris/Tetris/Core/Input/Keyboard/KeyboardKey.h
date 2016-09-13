@@ -1,10 +1,27 @@
 #pragma once
-class KeyboardKey
+
+namespace KEY_DOWN
 {
-public:
-	static const char* LEFT_ARROW;
-	static const char* RIGHT_ARROW;
-	static const char* UP_ARROW;
-	static const char* DOWN_ARROW;
-	static const char* RIGHT_CTRL;
-};
+	class KeyboardKey
+	{
+	public:
+		static const char* LEFT_ARROW;
+		static const char* RIGHT_ARROW;
+		static const char* UP_ARROW;
+		static const char* DOWN_ARROW;
+		static const char* RIGHT_CTRL;
+	};
+}
+
+namespace KEY_UP
+{
+	class KeyboardKey
+	{
+	public:
+		static const char* LEFT_ARROW;
+		static const char* RIGHT_ARROW;
+		static const char* UP_ARROW;
+		static const char* DOWN_ARROW;
+		static const char* RIGHT_CTRL;
+	};
+}
